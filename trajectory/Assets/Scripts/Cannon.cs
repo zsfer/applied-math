@@ -10,6 +10,7 @@ public class Cannon : MonoBehaviour
 
     [SerializeField] Transform _shootPosition;
     [SerializeField] Transform _barrel;
+    [SerializeField] Camera _cam;
 
     Vector3 _rotation;
 
@@ -20,6 +21,7 @@ public class Cannon : MonoBehaviour
     readonly float _increment = 0.025f; // physics step increment
     readonly float _overlap = 1.2f; // ray overlap to make sure we dont miss any surfaces :D
     [SerializeField] LayerMask _mask; // mask for raycast
+
 
     void Update()
     {
@@ -73,9 +75,15 @@ public class Cannon : MonoBehaviour
         _barrel.rotation = Quaternion.Euler(_rotation);
 
         if (Input.GetKey(KeyCode.J))
+        {
             _shootForce += Time.deltaTime * 10;
+            _cam.fieldOfView += Time.deltaTime * 20;
+        }
         else if (Input.GetKey(KeyCode.K))
+        {
             _shootForce -= Time.deltaTime * 10;
+            _cam.fieldOfView -= Time.deltaTime * 20;
+        }
 
         // ! SHOOTING
         if (Input.GetKeyDown(KeyCode.Space))
